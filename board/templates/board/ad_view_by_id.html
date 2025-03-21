@@ -1,0 +1,42 @@
+{% extends "_base.html" %}
+
+{% block title %} {{ ad.title }} {% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h2 class="my-4">{{ ad.title }}</h2>
+        <p><strong>Category:</strong> <a href="{% url 'category_by_id' ad.category.id %}">
+            {{ ad.category.name }}
+        </a></p>
+        <p><strong>Price:</strong> ${{ ad.price }}</p>
+        <p><strong>Description:</strong> {{ ad.description }}</p>
+        <p><strong>Seller:</strong> <a href="{% url 'user_view' ad.user.id %}">
+            {{ ad.user.user.username }}
+        </a></p>
+        <p><strong>Status:</strong>
+            {% if ad.is_active %}
+                <span class="badge bg-success">Active</span>
+            {% else %}
+                <span class="badge bg-danger">Inactive</span>
+            {% endif %}
+        </p>
+
+        <hr>
+
+        <h3>💬 Comments ({{ total_comments }})</h3>
+        {% if comments %}
+            <ul class="list-group">
+                {% for comment in comments %}
+                    <li class="list-group-item">
+                        <strong><a href="{% url 'user_view' comment.user.id %}">
+                            {{ comment.user.username }}
+                        </a>:</strong> {{ comment.content }}
+                        <span class="text-muted float-end">{{ comment.created_at|date:"F d, Y H:i" }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No comments yet.</p>
+        {% endif %}
+    </div>
+{% endblock %}

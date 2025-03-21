@@ -1,0 +1,30 @@
+{% extends "_base.html" %}
+
+{% block title %} Welcome to Ad Board {% endblock %}
+
+{% block main %}
+    <h1 class="display-4 text-center">Welcome to Ad Board!</h1>
+    <section class="container my-5 text-center">
+        <h2 class="text-dark">Why Use Ad Board?</h2>
+        <p class="fs-5">Post an ad in minutes and connect with buyers & sellers easily.</p>
+        <p class="text-muted">📢 In the last 30 days, <strong>{{ last_month_ads_count }}</strong> new ads were posted!
+        </p>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h3>🚀 Easy to Use</h3>
+                <p>Create listings quickly with an intuitive interface.</p>
+            </div>
+            <div class="col-md-4">
+                <h3>🔎 Find Anything</h3>
+                <p>From gadgets to cars, find the best deals near you.</p>
+            </div>
+            <div class="col-md-4">
+                <h3>💬 Connect Directly</h3>
+                <p>Chat with sellers and buyers instantly.</p>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
