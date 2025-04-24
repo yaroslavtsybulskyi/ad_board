@@ -5,12 +5,17 @@
 {% block main %}
     <div class="container">
         <h2 class="my-4">{{ ad.title }}</h2>
+        {% if ad.image %}
+            <img src="{{ ad.image.url }}" alt="{{ ad.title }}" width="400">
+        {% else %}
+            <p class="text-muted">📷 No image uploaded for this ad.</p>
+        {% endif %}
         <p><strong>Category:</strong> <a href="{% url 'category_by_id' ad.category.id %}">
             {{ ad.category.name }}
         </a></p>
         <p><strong>Price:</strong> ${{ ad.price }}</p>
         <p><strong>Description:</strong> {{ ad.description }}</p>
-        <p><strong>Seller:</strong> <a href="{% url 'user_view' ad.user.id %}">
+        <p><strong>Seller:</strong> <a href="{% url 'user_view' ad.user.user.id %}">
             {{ ad.user.user.username }}
         </a></p>
         <p><strong>Status:</strong>

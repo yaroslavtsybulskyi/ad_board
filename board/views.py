@@ -101,7 +101,7 @@ def users_view(request: HttpRequest, user_id: int) -> HttpResponse:
     :return: rendered user page with info about user
     """
     user = get_object_or_404(User, id=user_id)
-    user_profile = get_object_or_404(UserProfile, user=user)
+    user_profile, created = UserProfile.objects.get_or_create(user=user, defaults={'email': user.email})
     user_ads = Ad.objects.filter(user=user_profile)
     total_ads = user_ads.count()
     total_comments = Comment.objects.filter(user=user).count()

@@ -1,5 +1,4 @@
 from django.urls import path, re_path
-
 from board.views import view_all_ads, home_view, category_view, view_ad_by_id, category_by_id_view, users_view
 
 urlpatterns = [
@@ -11,3 +10,5 @@ urlpatterns = [
     re_path(r'user/(?P<user_id>\d+)/$', users_view, name='user_view'),
 
 ]
+
+

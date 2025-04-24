@@ -75,6 +75,7 @@ class Ad(models.Model):
     is_active = models.BooleanField(default=True)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='ads')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='ads')
+    image = models.ImageField(upload_to='ads/', blank=True, null=True)
 
     def short_description(self) -> str:
         """
