@@ -40,6 +40,7 @@ cd ad_board
 ```
 2. Create a .env file with your PostgreSQL credentials:
 ```
+SECRET_KEY=your_secret_key
 POSTGRES_DB=ad_board
 POSTGRES_USER=admin
 POSTGRES_PASSWORD=admin

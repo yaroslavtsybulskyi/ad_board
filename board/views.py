@@ -1,8 +1,11 @@
 from django.contrib.auth.models import User
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
+from rest_framework import generics
 
 from board.models import Ad, Category, Comment, UserProfile
+from board.serializers import RegisterSerializer
+from board.tasks import send_registrations_email, send_promo_email
 
 
 def home_view(request: HttpRequest) -> HttpResponse:
@@ -110,3 +113,21 @@ def users_view(request: HttpRequest, user_id: int) -> HttpResponse:
                'total_ads': total_ads, 'total_comments': total_comments}
 
     return render(request, 'board/users_view.html', context)
+
+
+class RegisterAPIView(generics.CreateAPIView):
+    """
+    API view for registering a new user.
+    """
+
+    serializer_class = RegisterSerializer
+
+    def perform_create(self, serializer: RegisterSerializer) -> None:
+        """
+        Saves the user and triggers asynchronous email sending tasks.
+        :param serializer: The serializer instance containing validated user data.
+        :return: None
+        """
+        user = serializer.save()
+        send_registrations_email.delay(user.email)
+        send_promo_email.apply_async((user.email,), countdown=600)
